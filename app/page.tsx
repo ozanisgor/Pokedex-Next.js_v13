@@ -1,3 +1,34 @@
-export default function Home() {
-  return <main className="">Home</main>;
+import Results from "./components/Results";
+
+type HomeProps = {
+  searchParams: {
+    limit: number;
+  };
+};
+
+export default async function Home({ searchParams }: HomeProps) {
+  const limit = searchParams.limit || 151;
+  const res = await fetch(`https://pokeapi.co/api/v2/pokemon?limit=${limit}`, {
+    next: { revalidate: 10000 },
+  });
+  const data = await res.json();
+  const results = data.results;
+
+  const pokemons = await Promise.all(
+    results.map(async (pokemon: any) => {
+      const res = await fetch(pokemon.url);
+      const data = await res.json();
+      return data;
+    })
+  );
+
+  if (!res.ok) {
+    throw new Error("Something went wrong");
+  }
+
+  return (
+    <div>
+      <Results pokemons={pokemons} />
+    </div>
+  );
 }
