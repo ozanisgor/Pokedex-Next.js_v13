@@ -29,7 +29,7 @@ type ResultsProps = {
 
 export default function Results({ pokemons }: ResultsProps) {
   return (
-    <div className="container mx-auto grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-10 my-10">
+    <div className="container mx-auto grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-10 py-10">
       {pokemons.map((pokemon) => (
         <PokemonCard key={pokemon.name} pokemon={pokemon} />
       ))}

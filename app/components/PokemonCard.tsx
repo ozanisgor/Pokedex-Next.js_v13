@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 
 type PokemonType = {
   slot: number;
@@ -26,7 +27,6 @@ type Pokemon = {
 };
 
 export default function PokemonCard({ pokemon }: { pokemon: Pokemon }) {
-  console.log(pokemon.types);
   const pokeIndex = ("000" + pokemon.id).slice(-3);
 
   const types = {
@@ -49,37 +49,39 @@ export default function PokemonCard({ pokemon }: { pokemon: Pokemon }) {
     steel: "bg-gray-700",
     fairy: "bg-pink-700",
   } as Record<string, string>;
+
   return (
-    <div
-      key={pokemon.name}
-      className="bg-slate-900 rounded p-5 flex flex-col justify-center items-center relative"
-    >
-      <span className="absolute text-5xl text-slate-500 top-0 right-3 font-bold">
-        #{pokeIndex}
-      </span>
-      <Image
-        src={pokemon.sprites?.other?.dream_world?.front_default || ""}
-        alt="pokemon image"
-        width={150}
-        height={150}
-        className="z-0 max-h-[150px] max-w-[150px]"
-      />
-      <div className="flex gap-2 my-3">
-        {pokemon.types.map(
-          (type) =>
-            type.type && (
-              <span
-                key={type.type.name}
-                className={`${types[type.type.name]} py-1 px-2`}
-              >
-                {type.type.name}
-              </span>
-            )
-        )}
+    <Link href={`/pokemon/${pokemon.name}`}>
+      <div className="bg-slate-900 rounded pt-10 pb-2 flex flex-col justify-center items-center relative">
+        <span className="absolute text-5xl text-slate-500 top-0 right-3 font-bold">
+          #{pokeIndex}
+        </span>
+        <div className="h-[150px] w-[150px] z-0">
+          <Image
+            src={pokemon.sprites?.other?.dream_world?.front_default || ""}
+            alt="pokemon image"
+            width={150}
+            height={150}
+            className="h-full w-full rounded-md"
+          />
+        </div>
+        <div className="flex gap-2 my-3">
+          {pokemon.types.map(
+            (type) =>
+              type.type && (
+                <span
+                  key={type.type.name}
+                  className={`${types[type.type.name]} py-1 px-2`}
+                >
+                  {type.type.name}
+                </span>
+              )
+          )}
+        </div>
+        <span className="uppercase font-semibold tracking-wider text-amber-400">
+          {pokemon.name}
+        </span>
       </div>
-      <span className="uppercase font-semibold tracking-wider text-amber-400">
-        {pokemon.name}
-      </span>
-    </div>
+    </Link>
   );
 }
