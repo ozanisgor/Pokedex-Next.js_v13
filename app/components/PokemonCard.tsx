@@ -27,7 +27,7 @@ type Pokemon = {
 };
 
 export default function PokemonCard({ pokemon }: { pokemon: Pokemon }) {
-  const pokeIndex = ("000" + pokemon.id).slice(-3);
+  const pokeIndex = ("0000" + pokemon.id).slice(-4);
 
   const types = {
     normal: "bg-gray-500",

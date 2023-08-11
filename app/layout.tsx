@@ -22,13 +22,8 @@ export default function RootLayout({
       <body className={inter.className}>
         <Providers>
           <Header />
-
           <Navigation />
-
-          {/* TODO */}
-          {/* <Search/> */}
           {children}
-
           {/* TODO */}
           {/* <Footer/> */}
         </Providers>

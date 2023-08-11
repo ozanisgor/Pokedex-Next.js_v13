@@ -66,8 +66,6 @@ export default async function Pokemon({ params }: PageParams) {
     fairy: "bg-pink-700",
   } as Record<string, string>;
 
-  console.log(pokeDetails.stats, "pokeDetails**********");
-
   // calculate % of the base value
   const hp =
     stats &&

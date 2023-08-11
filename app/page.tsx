@@ -3,14 +3,19 @@ import Results from "./components/Results";
 type HomeProps = {
   searchParams: {
     limit: number;
+    offset: number;
   };
 };
 
 export default async function Home({ searchParams }: HomeProps) {
   const limit = searchParams.limit || 151;
-  const res = await fetch(`https://pokeapi.co/api/v2/pokemon?limit=${limit}`, {
-    next: { revalidate: 10000 },
-  });
+  const offset = searchParams.offset || 0;
+  const res = await fetch(
+    `https://pokeapi.co/api/v2/pokemon?limit=${limit}&offset=${offset}`,
+    {
+      next: { revalidate: 10000 },
+    }
+  );
   const data = await res.json();
   const results = data.results;
 
