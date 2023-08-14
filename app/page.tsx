@@ -13,7 +13,7 @@ export default async function Home({ searchParams }: HomeProps) {
   const res = await fetch(
     `https://pokeapi.co/api/v2/pokemon?limit=${limit}&offset=${offset}`,
     {
-      next: { revalidate: 10000 },
+      next: { revalidate: 0 },
     }
   );
   const data = await res.json();
