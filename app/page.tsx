@@ -7,14 +7,9 @@ type HomeProps = {
   };
 };
 
-export default async function Home({ searchParams }: HomeProps) {
-  const limit = searchParams.limit || 151;
-  const offset = searchParams.offset || 0;
+async function getPokeData(limit: number, offset: number) {
   const res = await fetch(
-    `https://pokeapi.co/api/v2/pokemon?limit=${limit}&offset=${offset}`,
-    {
-      next: { revalidate: 0 },
-    }
+    `https://pokeapi.co/api/v2/pokemon?limit=${limit}&offset=${offset}`
   );
   const data = await res.json();
   const results = data.results;
@@ -23,6 +18,9 @@ export default async function Home({ searchParams }: HomeProps) {
     results.map(async (pokemon: any) => {
       const res = await fetch(pokemon.url);
       const data = await res.json();
+      if (!res.ok) {
+        throw new Error("Something went wrong");
+      }
       return data;
     })
   );
@@ -30,6 +28,15 @@ export default async function Home({ searchParams }: HomeProps) {
   if (!res.ok) {
     throw new Error("Something went wrong");
   }
+
+  return pokemons;
+}
+
+export default async function Home({ searchParams }: HomeProps) {
+  const limit = searchParams.limit || 151;
+  const offset = searchParams.offset || 0;
+
+  const pokemons = await getPokeData(limit, offset);
 
   return (
     <div>
