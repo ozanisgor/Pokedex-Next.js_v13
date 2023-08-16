@@ -7,6 +7,8 @@ type HomeProps = {
   };
 };
 
+export const dynamic = "force-dynamic";
+
 export default function Home({ searchParams }: HomeProps) {
   return (
     <div>
