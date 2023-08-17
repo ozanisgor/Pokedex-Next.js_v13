@@ -12,6 +12,17 @@ type PokemonType = {
 type Pokemon = {
   name: string;
   id: number;
+
+  // Other properties...
+
+  sprites: {
+    other?: {
+      dream_world?: {
+        front_default?: string | null;
+      };
+    };
+  };
+
   types: PokemonType[];
 };
 
@@ -31,15 +42,12 @@ export function PokemonCard2({ pokemon }: { pokemon: Pokemon }) {
         <span className=" text-5xl text-slate-500 top-0 right-3 font-bold">
           #{pokeIndex}
         </span>
-        <div className="h-[100px] w-[100px] z-0">
+        <div className="h-[150px] w-[150px] z-0">
           <Image
-            src={
-              `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-v/black-white/animated/${pokemon.id}.gif` ||
-              ""
-            }
+            src={pokemon.sprites?.other?.dream_world?.front_default || ""}
             alt="pokemon image"
-            width={50}
-            height={50}
+            width={150}
+            height={150}
             className="h-full w-full rounded-md"
           />
         </div>
