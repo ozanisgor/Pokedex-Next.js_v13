@@ -46,11 +46,11 @@ export function PokemonGrid({ pokemonList }: PokemonGridProps) {
         <h3 className="text-3xl pt-12 pb-6 text-center">Pokemon Collection</h3>
       </div>
 
-      <div className="mb-32 grid text-center lg:mb-0 lg:grid-cols-3 lg:text-left">
+      <div className="container mx-auto grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-10 py-10">
         {filteredPokemonList.map((pokemon: any) => {
           return (
             // <PokemonCard name={pokemon.name} key={pokemon.name + "Card"} />
-            <PokemonCard2 name={pokemon.name} key={pokemon.name + "Card"} />
+            <PokemonCard2 pokemon={pokemon} key={pokemon.name + "Card"} />
           );
         })}
       </div>
