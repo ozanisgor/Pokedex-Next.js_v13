@@ -31,10 +31,10 @@ export function PokemonCard2({ pokemon }: { pokemon: Pokemon }) {
         <span className=" text-5xl text-slate-500 top-0 right-3 font-bold">
           #{pokeIndex}
         </span>
-        <div className="h-[150px] w-[150px] z-0">
+        <div className="h-[100px] w-[100px] z-0">
           <Image
             src={
-              `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/${pokemon.id}.svg` ||
+              `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-v/black-white/animated/${pokemon.id}.gif` ||
               ""
             }
             alt="pokemon image"
