@@ -12,17 +12,6 @@ type PokemonType = {
 type Pokemon = {
   name: string;
   id: number;
-
-  // Other properties...
-
-  sprites: {
-    other?: {
-      dream_world?: {
-        front_default?: string | null;
-      };
-    };
-  };
-
   types: PokemonType[];
 };
 
@@ -44,7 +33,10 @@ export function PokemonCard2({ pokemon }: { pokemon: Pokemon }) {
         </span>
         <div className="h-[150px] w-[150px] z-0">
           <Image
-            src={pokemon.sprites?.other?.dream_world?.front_default || ""}
+            src={
+              `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/${pokemon.id}.svg` ||
+              ""
+            }
             alt="pokemon image"
             width={50}
             height={50}
