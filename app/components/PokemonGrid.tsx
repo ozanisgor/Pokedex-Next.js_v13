@@ -1,46 +1,59 @@
-import Results from "@/app/components/Results";
+"use client";
+import PokemonCard from "./PokemonCard";
+import { useState } from "react";
+import { Label } from "./ui/label";
+import { Input } from "./ui/input";
+import { PokemonCard2 } from "./Pokemon-card";
 
-type HomeProps = {
-  searchParams: {
-    limit: number;
-    offset: number;
-  };
-};
+// <PokemonGrid pokemonList={data}/>
 
-async function getPokeData(limit: number, offset: number) {
-  const res = await fetch(
-    `https://pokeapi.co/api/v2/pokemon?limit=${limit}&offset=${offset}`
-  );
-  const data = await res.json();
-  const results = data.results;
-
-  const pokemons = await Promise.all(
-    results.map(async (pokemon: any) => {
-      const res = await fetch(pokemon.url);
-      const data = await res.json();
-      if (!res.ok) {
-        throw new Error("Something went wrong");
-      }
-      return data;
-    })
-  );
-
-  if (!res.ok) {
-    throw new Error("Something went wrong");
-  }
-
-  return pokemons;
+interface PokemonGridProps {
+  pokemonList: any;
 }
 
-export default async function PokemonGrid({ searchParams }: HomeProps) {
-  const limit = searchParams.limit || 151;
-  const offset = searchParams.offset || 0;
+export function PokemonGrid({ pokemonList }: PokemonGridProps) {
+  const [searchText, setSearchText] = useState("");
 
-  const pokemons = await getPokeData(limit, offset);
+  console.log(pokemonList);
+  // filter the text
+  // {name: "pikachu", url:""}
+  const searchFilter = (pokemonList: any) => {
+    return pokemonList.filter((pokemon: any) =>
+      pokemon.name.toLowerCase().includes(searchText.toLowerCase())
+    );
+  };
+
+  // save the filtered array of objects
+  const filteredPokemonList = searchFilter(pokemonList);
+
+  // show the filtered array to user
 
   return (
-    <div>
-      <Results pokemons={pokemons} />
-    </div>
+    <>
+      <div>
+        <h3 className="text-2xl py-6 text-center">Search For Your Pokemon!</h3>
+        <div className="grid w-full max-w-sm items-center gap-1.5 mx-auto">
+          <Label htmlFor="pokemonName">Pokemon Name</Label>
+          <Input
+            type="text"
+            value={searchText}
+            autoComplete="off"
+            id="pokemonName"
+            placeholder="Charizard, Pikachu, etc."
+            onChange={(e) => setSearchText(e.target.value)}
+          />
+        </div>
+        <h3 className="text-3xl pt-12 pb-6 text-center">Pokemon Collection</h3>
+      </div>
+
+      <div className="mb-32 grid text-center lg:mb-0 lg:grid-cols-3 lg:text-left">
+        {filteredPokemonList.map((pokemon: any) => {
+          return (
+            // <PokemonCard name={pokemon.name} key={pokemon.name + "Card"} />
+            <PokemonCard2 name={pokemon.name} key={pokemon.name + "Card"} />
+          );
+        })}
+      </div>
+    </>
   );
 }
