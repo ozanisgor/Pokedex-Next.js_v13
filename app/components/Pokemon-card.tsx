@@ -46,8 +46,8 @@ export function PokemonCard2({ pokemon }: { pokemon: Pokemon }) {
           <Image
             src={pokemon.sprites?.other?.dream_world?.front_default || ""}
             alt="pokemon image"
-            width={150}
-            height={150}
+            width={50}
+            height={50}
             className="h-full w-full rounded-md"
           />
         </div>
