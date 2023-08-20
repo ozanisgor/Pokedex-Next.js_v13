@@ -5,22 +5,25 @@ export async function getPokemonList() {
   const data = await res.json();
   const results = data.results;
 
-  const pokemons = await Promise.all(
-    results.map(async (pokemon: any) => {
-      const res = await fetch(pokemon.url);
-      const data = await res.json();
-      if (!res.ok) {
-        throw new Error("Something went wrong");
-      }
-      return data;
-    })
-  );
+  const pokeDetails = getPokemonDetails(results);
 
   if (!res.ok) {
     throw new Error("Something went wrong");
   }
 
-  return pokemons;
+  return pokeDetails;
 }
+
+const getPokemonDetails = async (results: any) => {
+  const details = await Promise.all(
+    results.map(async (p: any) => {
+      const response = await fetch(`${POKEMON_API}/pokemon/${p.name}`);
+      const data = await response.json();
+      return data;
+    })
+  );
+
+  return details;
+};
 
 // getPokemon -> given a string 'pikachu', get the information of pikachu

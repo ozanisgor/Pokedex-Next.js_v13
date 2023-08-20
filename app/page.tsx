@@ -43,10 +43,11 @@ export default async function Home() {
 
   // const pokemons = await getPokeData(limit, offset);
 
-  const pokemonList = await getPokemonList();
+  // const pokemonList = await getPokemonList();
+
   return (
     <div>
-      <PokemonGrid pokemonList={pokemonList} />
+      {/* <PokemonGrid /> */}
       {/* <Results pokemons={pokemons} /> */}
     </div>
   );

@@ -1,32 +1,37 @@
 "use client";
 import PokemonCard from "./PokemonCard";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Label } from "./ui/label";
 import { Input } from "./ui/input";
 import { PokemonCard2 } from "./Pokemon-card";
-
-// <PokemonGrid pokemonList={data}/>
+import { getPokemonList } from "../lib/pokemonAPI";
 
 interface PokemonGridProps {
   pokemonList: any;
 }
 
-export function PokemonGrid({ pokemonList }: PokemonGridProps) {
+export function PokemonGrid() {
   const [searchText, setSearchText] = useState("");
+  const [pokemonList, setPokemonList] = useState([]);
 
-  console.log(pokemonList);
-  // filter the text
-  // {name: "pikachu", url:""}
+  // useEffect(() => {
+  //   const pokemons = getPokemonList();
+  //   setPokemonList(pokemons);
+  // }, []);
+
   const searchFilter = (pokemonList: any) => {
     return pokemonList.filter((pokemon: any) =>
       pokemon.name.toLowerCase().includes(searchText.toLowerCase())
     );
   };
 
-  // save the filtered array of objects
   const filteredPokemonList = searchFilter(pokemonList);
 
-  // show the filtered array to user
+  // useEffect(() => {
+  //   fetch("https://pokeapi.co/api/v2/pokemon")
+  //     .then((response) => response.json())
+  //     .then((json) => setPokemons(json.results));
+  // }, []);
 
   return (
     <>
@@ -48,10 +53,7 @@ export function PokemonGrid({ pokemonList }: PokemonGridProps) {
 
       <div className="container mx-auto grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-10 py-10">
         {filteredPokemonList.map((pokemon: any) => {
-          return (
-            // <PokemonCard name={pokemon.name} key={pokemon.name + "Card"} />
-            <PokemonCard2 pokemon={pokemon} key={pokemon.name + "Card"} />
-          );
+          return <PokemonCard2 pokemon={pokemon} key={pokemon.name + "Card"} />;
         })}
       </div>
     </>
