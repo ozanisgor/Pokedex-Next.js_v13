@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { getPokemon } from "../lib/pokemonAPI";
 
 type PageParams = {
   params: {
@@ -34,12 +35,16 @@ type Pokemon = {
   }>;
 };
 
-export default async function Pokemon({ params }: PageParams) {
-  const pokeName = params.name;
-  const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${pokeName}`);
-  const pokeDetails: Pokemon = await response.json();
+export default async function Pokemon({
+  params,
+}: {
+  params: { pokemonName: string };
+}) {
+  const pokeName = params.pokemonName;
+  const pokeDetails = await getPokemon(pokeName);
+
   const pokeIndex = ("000" + pokeDetails.id).slice(-3);
-  const stats = pokeDetails.stats?.map((stat) => {
+  const stats = pokeDetails.stats?.map((stat: any) => {
     return {
       name: stat.stat.name,
       value: stat.base_stat,
@@ -69,21 +74,25 @@ export default async function Pokemon({ params }: PageParams) {
   // calculate % of the base value
   const hp =
     stats &&
-    Math.floor((stats.find((stat) => stat.name === "hp")?.value! * 100) / 255);
+    Math.floor(
+      (stats.find((stat: any) => stat.name === "hp")?.value! * 100) / 255
+    );
   const attack = Math.floor(
-    (stats.find((stat) => stat.name === "attack")?.value! * 100) / 255
+    (stats.find((stat: any) => stat.name === "attack")?.value! * 100) / 255
   );
   const defense = Math.floor(
-    (stats.find((stat) => stat.name === "defense")?.value! * 100) / 255
+    (stats.find((stat: any) => stat.name === "defense")?.value! * 100) / 255
   );
   const spAttack = Math.floor(
-    (stats.find((stat) => stat.name === "special-attack")?.value! * 100) / 255
+    (stats.find((stat: any) => stat.name === "special-attack")?.value! * 100) /
+      255
   );
   const spDefense = Math.floor(
-    (stats.find((stat) => stat.name === "special-defense")?.value! * 100) / 255
+    (stats.find((stat: any) => stat.name === "special-defense")?.value! * 100) /
+      255
   );
   const speed = Math.floor(
-    (stats.find((stat) => stat.name === "speed")?.value! * 100) / 255
+    (stats.find((stat: any) => stat.name === "speed")?.value! * 100) / 255
   );
 
   return (
@@ -104,7 +113,7 @@ export default async function Pokemon({ params }: PageParams) {
         />
         <div className="flex gap-2 my-3">
           {pokeDetails.types.map(
-            (type) =>
+            (type: any) =>
               type.type && (
                 <span
                   key={type.type.name}
@@ -133,7 +142,7 @@ export default async function Pokemon({ params }: PageParams) {
           <p>
             HP:
             <span className="ml-2 font-bold">
-              {stats.find((stat) => stat.name === "hp")?.value}
+              {stats.find((stat: any) => stat.name === "hp")?.value}
             </span>
           </p>
           <div className="mb-6 h-2 bg-neutral-200 dark:bg-neutral-600 rounded-r-full">

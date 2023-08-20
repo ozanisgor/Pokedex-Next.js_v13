@@ -1,6 +1,6 @@
 import Results from "@/app/components/Results";
 import { PokemonGrid } from "./components/PokemonGrid";
-import { getPokemonList } from "./lib/pokemonAPI";
+import { getPokemonList } from "@/lib/pokemonAPI";
 
 type HomeProps = {
   searchParams: {
@@ -43,11 +43,11 @@ export default async function Home() {
 
   // const pokemons = await getPokeData(limit, offset);
 
-  // const pokemonList = await getPokemonList();
+  const pokemonList = await getPokemonList();
 
   return (
     <div>
-      {/* <PokemonGrid /> */}
+      <PokemonGrid pokemonList={pokemonList} />
       {/* <Results pokemons={pokemons} /> */}
     </div>
   );

@@ -32,8 +32,6 @@ type ResultsProps = {
 };
 
 export default function Results({ pokemons }: ResultsProps) {
-  console.log(pokemons, "pokemons in results*********");
-
   const router = useRouter();
   const [searchInput, setSearchInput] = useState("");
 
