@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { getPokemon } from "../lib/pokemonAPI";
+import PokemonImage from "../components/PokemonImage";
 
 type PageParams = {
   params: {
@@ -104,13 +105,18 @@ export default async function Pokemon({
         <span className="absolute text-[300px] font-bold text-slate-500 mt-5">
           #{pokeIndex}
         </span>
-        <Image
-          src={pokeDetails.sprites?.other?.dream_world?.front_default || ""}
-          width={200}
-          height={200}
-          alt={`${pokeDetails.name} image`}
-          className="mx-auto mt-5 z-0"
-        />
+        <div
+          className="m-4"
+          style={{ position: "relative", width: "300px", height: "300px" }}
+        >
+          <PokemonImage
+            image={pokeDetails.sprites?.other?.dream_world?.front_default}
+            alternateImage={
+              pokeDetails.sprites?.other["official-artwork"].front_default
+            }
+            name={pokeDetails.name}
+          />
+        </div>
         <div className="flex gap-2 my-3">
           {pokeDetails.types.map(
             (type: any) =>
@@ -119,7 +125,7 @@ export default async function Pokemon({
                   key={type.type.name}
                   className={`${
                     types[type.type.name]
-                  } py-1 px-2 z-0 rounded-full text-lg`}
+                  } py-1 px-2 z-0 rounded-full text-lg text-slate-900`}
                 >
                   {type.type.name}
                 </span>

@@ -5,8 +5,8 @@ import { useSearchParams } from "next/navigation";
 
 type NavbarItemParams = {
   title: string;
-  param: number;
-  offset: number;
+  param?: number;
+  offset?: number;
 };
 
 export default function NavbarItem({ title, param, offset }: NavbarItemParams) {
@@ -16,11 +16,14 @@ export default function NavbarItem({ title, param, offset }: NavbarItemParams) {
   return (
     <div>
       <Link
-        href={`/?limit=${param}&offset=${offset}`}
-        className={`m-4 hover:text-red-600 font-semibold p-2 ${
+        href={param ? `/?limit=${param}&offset=${offset}` : `/`}
+        className={`m-4 hover:text-red-600 font-semibold p-2
+        ${
+          param &&
           limit === param.toString() &&
           "underline underline-offset-8 decoration-4 decoration-red-500 rounded-lg"
-        }`}
+        }
+        `}
       >
         {title}
       </Link>
